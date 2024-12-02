@@ -1,32 +1,49 @@
+import {useState, useRef} from 'react'
+
 export default function Login() {
+
+  const [formData, setFormData]=useState({email:'',password:''});
+  const emailButton=useRef();
+  const passwordButton=useRef();
+  console.log(formData);
 
   function handleOnClick(event) {
     event.preventDefault();
-    console.log("Clicked !");
+    setFormData({email:emailButton.current.value, password:passwordButton.current.value})
   }
 
   return (
-    <form  onClick={handleOnClick}>
+    <form  >
       <h2>Login</h2>
 
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input id="email" type="email" name="email" />
+          <input 
+            ref={emailButton} 
+            id="email" 
+            type="email" 
+            name="email" 
+              />
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
-          <input id="password" type="password" name="password" />
+          <input 
+            ref={passwordButton} 
+            id="password" 
+            type="password" 
+            name="password" 
+              />
         </div>
       </div>
 
       <p className="form-actions">
         <button className="button button-flat">Reset</button>
         <button 
-          //type="button" 
+ 
           className="button" 
-          //onClick={handleOnClick}
+          onClick={handleOnClick}
           >
             Login
         </button>
