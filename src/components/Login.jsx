@@ -5,7 +5,11 @@ export default function Login() {
   const [formData, setFormData]=useState({email:'',password:''});
   const emailButton=useRef();
   const passwordButton=useRef();
-  console.log(formData);
+  //console.log(formData);
+  
+  const emailIsInvalid = !formData.email.includes('@') && formData.email != ""
+    
+
 
   function handleResetClick(event) {
     event.preventDefault();
@@ -15,6 +19,12 @@ export default function Login() {
 
   function handleLoginClick(event) {
     event.preventDefault();
+    
+  //setFormData({email:emailButton.current.value, password:passwordButton.current.value})
+    console.log(formData);
+  }
+
+  function handleOnChange() {
     setFormData({email:emailButton.current.value, password:passwordButton.current.value})
   }
 
@@ -29,8 +39,12 @@ export default function Login() {
             ref={emailButton} 
             id="email" 
             type="email" 
-            name="email" 
+            name="email"
+            onChange={handleOnChange}
               />
+          <div className="control-error">
+            {emailIsInvalid && <p>Please enter a valid email adress.</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
@@ -39,7 +53,8 @@ export default function Login() {
             ref={passwordButton} 
             id="password" 
             type="password" 
-            name="password" 
+            name="password"
+            onChange={handleOnChange} 
               />
         </div>
       </div>
