@@ -7,7 +7,13 @@ export default function Login() {
   const passwordButton=useRef();
   console.log(formData);
 
-  function handleOnClick(event) {
+  function handleResetClick(event) {
+    event.preventDefault();
+    emailButton.current.value="",
+    passwordButton.current.value="";
+  }
+
+  function handleLoginClick(event) {
     event.preventDefault();
     setFormData({email:emailButton.current.value, password:passwordButton.current.value})
   }
@@ -39,11 +45,11 @@ export default function Login() {
       </div>
 
       <p className="form-actions">
-        <button className="button button-flat">Reset</button>
+        <button type="reset" className="button button-flat" onClick={handleResetClick}>Reset</button>
         <button 
  
           className="button" 
-          onClick={handleOnClick}
+          onClick={handleLoginClick}
           >
             Login
         </button>

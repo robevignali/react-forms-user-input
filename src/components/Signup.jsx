@@ -8,7 +8,7 @@ export default function Signup() {
         console.log(choiceChannel);
         const data=Object.fromEntries(fd.entries());
         data.choices=choiceChannel;
-        
+        //event.target.reset();
         console.log(data);
     }
 
