@@ -28,6 +28,12 @@ export default function Login() {
 
   }
 
+  function handleResetClick(event) {
+    event.preventDefault();
+    setFormData({email:'',password:''});
+    setDidEdit({email:false,password:false});
+  }
+
   return (
     <form  >
       <h2>Login</h2>
@@ -42,6 +48,7 @@ export default function Login() {
             name="email"
             onChange={handleOnChange}
             onBlur={handleBlur}
+            value={formData.email}
               />
           <div className="control-error">
             {emailIsInvalid && <p>Please enter a valid email adress.</p>}
@@ -56,7 +63,8 @@ export default function Login() {
             type="password" 
             name="password"
             onChange={handleOnChange}
-            onBlur={handleBlur} 
+            onBlur={handleBlur}
+            value={formData.password} 
               />
         </div>
       </div>
@@ -65,7 +73,7 @@ export default function Login() {
         <button 
           type="reset" 
           className="button button-flat" 
-          //onClick={handleResetClick}
+          onClick={handleResetClick}
           >
             Reset
         </button>
