@@ -4,12 +4,20 @@ export default function Login() {
 
   const [formData, setFormData]=useState({email:'',password:''});
   const [didEdit,setDidEdit]=useState({email:false,password:false});
-  
+  const [emailIsValid,setEmailIsValid]=useState(true);
+
   const emailIsInvalid =didEdit.email != "" && !formData.email.includes('@');
     
 
-  function handleLoginClick(event) {
+  function handleSubmit(event) {
     event.preventDefault();
+    if(!formData.email.includes('@')){
+      setEmailIsValid(false);
+      setFormData({email:'',password:''});
+      setDidEdit({email:false,password:false});
+      return;
+    }
+    setEmailIsValid(true);
     console.log(formData);
   }
 
@@ -36,6 +44,9 @@ export default function Login() {
 
   return (
     <form  >
+      <div className="control-error">
+        {!emailIsValid && <p>Please enter a valid email adress.</p>}
+      </div>
       <h2>Login</h2>
 
       <div className="control-row">
@@ -80,7 +91,7 @@ export default function Login() {
         <button 
  
           className="button" 
-          onClick={handleLoginClick}
+          onClick={handleSubmit}
           >
             Login
         </button>
