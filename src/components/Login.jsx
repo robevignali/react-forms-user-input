@@ -1,32 +1,52 @@
 import {useState} from 'react'
-import Input from './Input';
+import Input from './Input'
+import {isEmail,isNotEmpty,hasMinLength} from '../util/validation'
 
 export default function Login() {
 
   const [formData, setFormData]=useState({email:'',password:''});
   const [didEdit,setDidEdit]=useState({email:false,password:false});
   const [emailIsValid,setEmailIsValid]=useState(true);
+  const [pswIsValid,setPswIsValid]=useState(true);
   
   let emailError={isInvalid:false,message:null}
-  if (didEdit.email != "" && !formData.email.includes('@')) {
+  // if (didEdit.email != "" && !formData.email.includes('@')) {
+  //   emailError={isInvalid:true,message:'Please enter a valid email adress.'}
+  // }
+  if (didEdit.email != "" && !isEmail(formData.email) ) {
     emailError={isInvalid:true,message:'Please enter a valid email adress.'}
   }
   
   let passwordError={isInvalid:false,message:null}
-  if (didEdit.password != "" && formData.password.trim().length <= 6) {
+
+  // if (didEdit.password != "" && formData.password.trim().length <= 6) {
+  //   passwordError={isInvalid:true,message:'Please enter a valid password.'}
+  // }
+    
+  if (didEdit.password != "" && !hasMinLength(formData.password,8)) {
     passwordError={isInvalid:true,message:'Please enter a valid password.'}
   }
     
 
   function handleSubmit(event) {
     event.preventDefault();
-    if(!formData.email.includes('@')){
+    //if(!formData.email.includes('@')){
+    if(!isEmail(formData.email)){
       setEmailIsValid(false);
       setFormData({email:'',password:''});
       setDidEdit({email:false,password:false});
       return;
     }
+    if(!isNotEmpty(formData.password) && !hasMinLength(formData.password,8)){
+      setPswIsValid(false);
+      setFormData({email:'',password:''});
+      setDidEdit({email:false,password:false});
+      return;
+    }
+
     setEmailIsValid(true);
+    setPswIsValid(true);
+    
     console.log(formData);
   }
 
@@ -54,7 +74,7 @@ export default function Login() {
   return (
     <form  >
       <div className="control-error">
-        {!emailIsValid && <p>Please enter a valid email adress.</p>}
+        {!emailIsValid || !pswIsValid ? <p>Please enter valid login.</p>:null}
       </div>
       <h2>Login</h2>
       <div className="control-row">
