@@ -1,12 +1,21 @@
 import {useState} from 'react'
+import Input from './Input';
 
 export default function Login() {
 
   const [formData, setFormData]=useState({email:'',password:''});
   const [didEdit,setDidEdit]=useState({email:false,password:false});
   const [emailIsValid,setEmailIsValid]=useState(true);
-
-  const emailIsInvalid =didEdit.email != "" && !formData.email.includes('@');
+  
+  let emailError={isInvalid:false,message:null}
+  if (didEdit.email != "" && !formData.email.includes('@')) {
+    emailError={isInvalid:true,message:'Please enter a valid email adress.'}
+  }
+  
+  let passwordError={isInvalid:false,message:null}
+  if (didEdit.password != "" && formData.password.trim().length <= 6) {
+    passwordError={isInvalid:true,message:'Please enter a valid password.'}
+  }
     
 
   function handleSubmit(event) {
@@ -48,36 +57,28 @@ export default function Login() {
         {!emailIsValid && <p>Please enter a valid email adress.</p>}
       </div>
       <h2>Login</h2>
-
       <div className="control-row">
-        <div className="control no-margin">
-          <label htmlFor="email">Email</label>
-          <input 
-            //ref={emailButton} 
-            id="email" 
-            type="email" 
-            name="email"
-            onChange={handleOnChange}
-            onBlur={handleBlur}
-            value={formData.email}
-              />
-          <div className="control-error">
-            {emailIsInvalid && <p>Please enter a valid email adress.</p>}
-          </div>
-        </div>
+        
+        <Input 
+          label="email" 
+          id="email"
+          error={emailError}
+          type="email" 
+          name="email"
+          onChange={handleOnChange}
+          onBlur={handleBlur}
+        />  
 
-        <div className="control no-margin">
-          <label htmlFor="password">Password</label>
-          <input 
-            //ref={passwordButton} 
-            id="password" 
+         <Input 
+            label="password" 
+            id="password"
+            error={passwordError}
             type="password" 
             name="password"
             onChange={handleOnChange}
             onBlur={handleBlur}
-            value={formData.password} 
-              />
-        </div>
+          />  
+
       </div>
 
       <p className="form-actions">
