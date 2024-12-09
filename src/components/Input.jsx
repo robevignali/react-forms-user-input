@@ -6,7 +6,7 @@ export default function Input({label,id,error,...props}) {
         <label htmlFor="email">{label}</label>
         <input id={id} {...props} />
         <div className="control-error">
-            {error.isInvalid && <p>{error.message}</p>}
+            {error && <p>{error}</p>}
         </div>
     </div>
     )
